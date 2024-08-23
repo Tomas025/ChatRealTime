@@ -5,7 +5,8 @@ import { FiSend } from 'react-icons/fi'
 type messageType = {
     text: string
     author: string
-    authorId: string
+    authorId: string,
+    color: string
 }
 
 export function Chat({ socket }: { socket: any }) {
@@ -53,11 +54,11 @@ export function Chat({ socket }: { socket: any }) {
 
     return (
         <div>
-            <div className="h-[600px] w-[400px] bg-white shadow-lg">
-                <div className="h-[550px] overflow-y-auto text-black flex flex-col px-[10px]">
+            <div className="h-[600px] w-[400px] bg-white shadow-lg rounded-lg">
+                <div className="h-[535px] overflow-y-auto text-black flex flex-col px-[10px]">
                     {
                         messageList.map((message: messageType, index: number) => (
-                            <div key={index} className={`max-w-[250px] w-fit mt-[10px] px-[5px] py-[10px] rounded-[7px] ${message.authorId === socket.id ? "bg-sky-300 self-end" : "bg-gray-300 self-start"}`}>
+                            <div key={index} style={{ backgroundColor: `${message.authorId !== socket.id && message.color}` }} className={`max-w-[250px] w-fit mt-[10px] px-[5px] py-[10px] rounded-[7px] ${message.authorId === socket.id && "bg-sky-300 self-end"}`}>
                                 <div className="message-author"><strong>{message.author}</strong></div>
                                 <div className="message-text">{message.text}</div>
                             </div>
@@ -65,9 +66,11 @@ export function Chat({ socket }: { socket: any }) {
                     }
                     <div ref={bottomRef} />
                 </div>
-                <div className="w-full bg-red-500 px-4 gap-2 py-[10px] box-border flex items-center">
-                    <input ref={messageRef} placeholder='Mensagem' onKeyDown={(e) => getEnterKey(e)} className='w-full border-b border-b-gray-600 outline-none focus:border-b-2' />
-                    <FiSend onClick={() => handleSubmit()} className='text-blue-300 text-2xl m-1 cursor-pointer'/>
+                <div className='px-4 mt-[10px]'>
+                    <div className="w-full bg-slate-300 rounded-full px-4 gap-2 py-[10px] box-border flex items-center">
+                        <input ref={messageRef} placeholder='Digite uma mensagem' onKeyDown={(e) => getEnterKey(e)} className='w-full bg-slate-300 rounded-sm outline-none pl-2' />
+                        <FiSend onClick={() => handleSubmit()} className='text-green-600 text-2xl cursor-pointer' />
+                    </div>
                 </div>
             </div>
         </div>

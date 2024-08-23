@@ -14,16 +14,17 @@ export function Join({ setChatVisibility, setSocket }: JoinProps) {
         const username = usernameRef.current?.value
         if (!username?.trim()) return
         const socket = io('http://localhost:3001')
-        socket.emit('set_username', username)
+        const color = '#' + Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, '0');
+        socket.emit('set_username', { username, color })
         setSocket(socket)
         setChatVisibility(true)
     }
 
     return (
-        <div className="bg-white text-black w-[400px] h-[200px] flex flex-col justify-center items-center shadow-lg">
-            <h2 className='text-2xl font-bold mb-7'>Chat em tempo real</h2>
-            <input ref={usernameRef} type='text' placeholder='Nome de usuário' className='border-b border-b-gray-600 outline-none focus:border-b-2' />
-            <button onClick={() => handleSubmit()} className='mt-3 bg-blue-400 text-white px-8 py-4 rounded-md'>Entrar</button>
+        <div className="bg-white text-black flex flex-col justify-between items-center gap-y-7 shadow-lg rounded-2xl py-10 px-24">
+            <h2 className='text-3xl font-bold'>Chat</h2>
+            <input ref={usernameRef} type='text' placeholder='Nome de usuário' className='bg-slate-200 p-2 rounded-md' autoFocus />
+            <button onClick={() => handleSubmit()} className='bg-blue-400 text-white px-8 py-4 rounded-md shadow-lg hover:bg-blue-500'>Entrar</button>
         </div>
     )
 }

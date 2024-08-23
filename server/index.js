@@ -11,15 +11,17 @@ io.on('connection', socket => {
     console.log('Usuário desconectado!', socket.id)
   })
 
-  socket.on('set_username', username => {
-    socket.data.username = username
+  socket.on('set_username', user => {
+    socket.data.username = user.username
+    socket.data.color = user.color
   })
 
   socket.on('message', text => {
     io.emit('receive_message', {
       text,
       authorId: socket.id,
-      author: socket.data.username
+      author: socket.data.username,
+      color: socket.data.color
     })
   })
 })

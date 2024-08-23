@@ -11,7 +11,7 @@ export default function App() {
   const [socket, setSocket] = useState()
 
   return (
-    <div className="bg-gradient-to-bl from-cyan-300 to-blue-500 h-screen flex justify-center items-center">
+    <div className="bg-gradient-to-bl from-cyan-200 to-blue-800 h-screen flex justify-center items-center">
       {
         chatVisibility ? <Chat socket={socket} /> : <Join setSocket={setSocket} setChatVisibility={setChatVisibility} />
       }
